@@ -24,20 +24,20 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
-        try {
-            return httpSecurity
-                    .authorizeHttpRequests(req -> {
-                        req.requestMatchers("/css/**", "/js/**", "/assets/**").permitAll();
-                        req.anyRequest().authenticated();
-                    })
-                    .formLogin(form -> form
-                            .loginPage("/login")
-                            .defaultSuccessUrl("/")
-                            .permitAll()
-                    ).build();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro de tela de login");
-        }
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .authorizeHttpRequests(req -> {
+                    req.requestMatchers("/css/**", "/js/**", "/assets/**").permitAll();
+                    req.anyRequest().authenticated();
+                })
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/")
+                        .permitAll()
+                )
+                .logout(form -> form
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll()
+                ).build();
     }
 }
