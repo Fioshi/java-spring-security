@@ -38,6 +38,9 @@ public class SecurityConfig {
                 .logout(form -> form
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
-                ).build();
+                ).rememberMe(rm -> rm
+                        .key("lembrardemim")
+                        .alwaysRemember(true))
+                .build();
     }
 }
